@@ -1,3 +1,20 @@
+function checkInput (text: string) {
+    match = 0
+    for (let index = 0; index <= 2; index++) {
+        if (text == foodNames[index]) {
+            music.baDing.play()
+            match += 1
+            info.changeScoreBy(1)
+        }
+    }
+    if (match == 1) {
+        game.splash("good job")
+    } else {
+        game.splash("incorrect")
+    }
+}
+let match = 0
+let foodNames: string[] = []
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -121,6 +138,7 @@ scene.setBackgroundImage(img`
     2222212222222222221222222222222222221222222222222222212222222221222222222122222222212222222222221222222222222122222222222222221222222222222222222222122222222222
     `)
 game.splash("remember the foods you see")
+info.setScore(0)
 let picnicFood = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -139,7 +157,7 @@ let picnicFood = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-let foodNames = ["strawberry", "cheries", "apple"]
+foodNames = ["strawberry", "cheries", "apple"]
 let foodImages = [img`
     . . . . . . . 6 . . . . . . . . 
     . . . . . . 8 6 6 . . . 6 8 . . 
@@ -214,4 +232,8 @@ picnicFood.setImage(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `)
-let input2 = game.askForString("what foods did you see")
+if (info.score() == 3) {
+    game.over(true)
+}
+let input2 = game.askForString("name one of the foods you saw")
+checkInput(input2)
